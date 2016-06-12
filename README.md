@@ -11,8 +11,9 @@ A simple R implementation of the [PhenoGraph](http://www.cell.com/cell/abstract/
 To install the latest version from the github repository, use:
 
 ``` r
-if(!require(devtools)) 
-install.packages("devtools") # If not already installed
+if(!require(devtools)){
+  install.packages("devtools") # If not already installed
+}
 devtools::install_github("JinmiaoChenLab/Rphenograph")
 ```
 
