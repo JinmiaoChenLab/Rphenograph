@@ -1,0 +1,26 @@
+Package: Rphenograph
+Type: Package
+Title: R implementation of the phenograph algorithm
+Version: 0.99.1
+Date: 2015-09-07
+Author: Hao Chen
+Maintainer: Hao Chen <chen_hao@immunol.a-star.edu.sg>
+Description: A simple R implementation of the phenograph [PhenoGraph](http://
+    www.cell.com/cell/abstract/S0092-8674(15)00637-6) algorithm, which is a
+    clustering method designed for high-dimensional single-cell data analysis.
+    It works by creating a graph ("network") representing phenotypic similarities
+    between cells by calclating the Jaccard coefficient between nearest-neighbor
+    sets, and then identifying communities using the well known ["Louvain method"]
+    (https://sites.google.com/site/findcommunities/) in this graph.
+Depends:
+    R (>= 2.10.0), ggplot2, igraph
+Imports:
+    igraph(>= 1.0.1),
+    RANN(>= 2.5),
+    Rcpp (>= 0.12.0),
+    ggplot2
+LinkingTo: Rcpp
+Suggests:
+    testthat
+License: Artistic-2.0
+RoxygenNote: 5.0.1
