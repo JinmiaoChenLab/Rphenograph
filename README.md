@@ -1,9 +1,9 @@
-R implementation of the phenograph algorithm
+R implementation of the PhenoGraph algorithm
 ===============
 
 ### Rphenograph
 
-A simple R implementation of the phenograph [PhenoGraph](http://www.cell.com/cell/abstract/S0092-8674(15)00637-6) [1] algorithm, which is a clustering method designed for high-dimensional single-cell data analysis. It works by creating a graph ("network") representing phenotypic similarities between cells by calclating the Jaccard coefficient between nearest-neighbor sets, and then identifying communities using the well known [Louvain method](https://sites.google.com/site/findcommunities/) in this graph. 
+A simple R implementation of the [PhenoGraph](http://www.cell.com/cell/abstract/S0092-8674(15)00637-6) [1] algorithm, which is a clustering method designed for high-dimensional single-cell data analysis. It works by creating a graph ("network") representing phenotypic similarities between cells by calclating the Jaccard coefficient between nearest-neighbor sets, and then identifying communities using the well known [Louvain method](https://sites.google.com/site/findcommunities/) in this graph. 
 
 
 ### Installation
@@ -32,7 +32,7 @@ ggplot(iris_unique, aes(x=Sepal.Length, y=Sepal.Width, col=Species, shape=phenog
 
 ```
 
-!()[Rhpenograph_iris_cluster.png]
+![](Rhpenograph_iris_cluster.png)
 
 ### Reference
 
