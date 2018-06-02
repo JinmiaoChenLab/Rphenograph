@@ -1,7 +1,7 @@
 Package: Rphenograph
 Type: Package
 Title: R implementation of the phenograph algorithm
-Version: 0.99.1
+Version: 0.99.1.9001
 Date: 2015-09-07
 Author: Hao Chen
 Maintainer: Hao Chen <chen_hao@immunol.a-star.edu.sg>
@@ -23,4 +23,4 @@ LinkingTo: Rcpp
 Suggests:
     testthat
 License: Artistic-2.0
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
