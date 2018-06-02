@@ -110,8 +110,7 @@ Rphenograph <- function(data, k=30, directed=FALSE, prune=FALSE){
 #' to within a specified error bound. For more information on the ANN library please 
 #' visit http://www.cs.umd.edu/~mount/ANN/.
 #' 
-#' @param data matrix; input data matrix
-#' @param k integer; number of nearest neighbours
+#' @describeIn Rphenograph Uses a kd-tree to find the p number of near neighbours for each point in an input/output dataset.
 #' 
 #' @return a n-by-k matrix of neighbor indices
 #' 
