@@ -76,15 +76,15 @@ Rphenograph <- function(data, k=30, directed=FALSE, prune=FALSE){
     colnames(relations)<- c("from","to","weight")
     t3 <- system.time(g <- graph.data.frame(relations, directed=directed))
     
-    if(directed==FALSE){
-      if(prune){
-        # symmetrize graph by multiplying with transpose
-        t3 <- t3 ** t(t3)
-      } else {
-        # symmetrize graph by averaging with transpose
-        t3 <- (t3 + t(t3))/2
-      }
-    }
+    # if(directed==FALSE){
+    #   if(prune){
+    #     # symmetrize graph by multiplying with transpose
+    #     t3 <- t3 ** t(t3)
+    #   } else {
+    #     # symmetrize graph by averaging with transpose
+    #     t3 <- (t3 + t(t3))/2
+    #   }
+    # }
 
     # Other community detection algorithms: 
     #    cluster_walktrap, cluster_spinglass, 
@@ -125,3 +125,4 @@ find_neighbors <- function(data, k){
   nearest <- nn2(data, data, k, searchtype = "standard")
   return(nearest[[1]])
 }
+
