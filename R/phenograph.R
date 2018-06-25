@@ -36,9 +36,10 @@
 #' modularity(Rphenograph_out[[2]])
 #' membership(Rphenograph_out[[2]])
 #' iris_unique$phenograph_cluster <- factor(membership(Rphenograph_out[[2]]))
-#' ggplot(iris_unique, aes(x=Sepal.Length, y=Sepal.Width, col=Species, shape=phenograph_cluster)) + geom_point(size = 3)+theme_bw()
+#' ggplot(iris_unique, aes(x=Sepal.Length, y=Sepal.Width, col=Species, shape=phenograph_cluster))
+#'     + geom_point(size = 3)+theme_bw()
 #' 
-#' @importFrom igraph graph.data.frame cluster_louvain modularity membership
+#' @importFrom igraph graph.data.frame cluster_louvain modularity membership as_adjacency_matrix graph_from_adjacency_matrix
 #' @import ggplot2
 #' @useDynLib Rphenograph
 #' 
@@ -98,7 +99,7 @@ Rphenograph <- function(data, k=30, directed=FALSE, prune=FALSE){
     cat("  Return a community class\n  -Modularity value:", modularity(community),"\n")
     cat("  -Number of clusters:", length(unique(membership(community))))
     
-    #return(list(g, community))
+    return(list(g, community))
 }
 
 #' K Nearest Neighbour Search
