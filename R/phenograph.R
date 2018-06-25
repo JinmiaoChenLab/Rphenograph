@@ -39,8 +39,8 @@
 #' membership(Rphenograph_out[[2]])
 #' iris_unique$phenograph_cluster <- factor(membership(Rphenograph_out[[2]]))
 #' library(ggplot2)
-#' ggplot(iris_unique, aes(x=Sepal.Length, y=Sepal.Width, col=Species, shape=phenograph_cluster))
-#'     + geom_point(size = 3)+theme_bw()
+#' ggplot(iris_unique, aes(x=Sepal.Length, y=Sepal.Width, col=Species, shape=phenograph_cluster)) +
+#'     geom_point(size = 3) + theme_bw()
 #' 
 #' @importFrom igraph graph.data.frame cluster_louvain modularity membership as_adjacency_matrix graph_from_adjacency_matrix
 #' @import ggplot2

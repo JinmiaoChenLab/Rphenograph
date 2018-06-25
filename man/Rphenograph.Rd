@@ -70,8 +70,8 @@ modularity(Rphenograph_out[[2]])
 membership(Rphenograph_out[[2]])
 iris_unique$phenograph_cluster <- factor(membership(Rphenograph_out[[2]]))
 library(ggplot2)
-ggplot(iris_unique, aes(x=Sepal.Length, y=Sepal.Width, col=Species, shape=phenograph_cluster))
-    + geom_point(size = 3)+theme_bw()
+ggplot(iris_unique, aes(x=Sepal.Length, y=Sepal.Width, col=Species, shape=phenograph_cluster)) +
+    geom_point(size = 3) + theme_bw()
 
 iris_unique <- unique(iris) # Remove duplicates
 data <- as.matrix(iris_unique[,1:4])
