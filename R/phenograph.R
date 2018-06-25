@@ -82,7 +82,7 @@ Rphenograph <- function(data, k=30, directed=FALSE, prune=FALSE, clust_fun=NULL)
       if(prune){
         cat("Removing non-symmetric links...")
         g <- graph.data.frame(relations, directed=TRUE)
-        mat <- as_adjacency_matrix(g)
+        mat <- as_adjacency_matrix(g, sparse = FALSE)
         mat <- mat %*% t(mat)
         g <- graph_from_adjacency_matrix(mat, mode = "undirected")
       } else {
