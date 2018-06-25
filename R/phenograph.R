@@ -69,12 +69,22 @@ Rphenograph <- function(data, k=30, directed=FALSE, prune=FALSE){
     t1 <- system.time(neighborMatrix <- find_neighbors(data, k=k+1)[,-1])
     cat("DONE ~",t1[3],"s\n", " Compute jaccard coefficient between nearest-neighbor sets...")
     t2 <- system.time(links <- jaccard_coeff(neighborMatrix))
-
+    return(links)
     cat("DONE ~",t2[3],"s\n", " Build undirected graph from the weighted links...")
     links <- links[links[,1]>0, ]
     relations <- as.data.frame(links)
-    colnames(relations)<- c("from","to","weight")
-    t3 <- system.time(g <- graph.data.frame(relations, directed=directed))
+    colnames(relations) <- c("from","to","weight")
+    t3 <- system.time({
+      if(prune){
+        cat("Removing non-symmetric links...")
+        g <- graph.data.frame(relations, directed=TRUE)
+        mat <- as_adjacency_matrix(g)
+        mat <- mat %*% t(mat)
+        g <- graph_from_adjacency_matrix(mat)
+      } else {
+        g <- graph.data.frame(relations, directed=directed)
+      }
+    })
 
     # Other community detection algorithms: 
     #    cluster_walktrap, cluster_spinglass, 
@@ -88,7 +98,7 @@ Rphenograph <- function(data, k=30, directed=FALSE, prune=FALSE){
     cat("  Return a community class\n  -Modularity value:", modularity(community),"\n")
     cat("  -Number of clusters:", length(unique(membership(community))))
     
-    return(list(g, community))
+    #return(list(g, community))
 }
 
 #' K Nearest Neighbour Search
