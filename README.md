@@ -2,6 +2,10 @@ R implementation of the PhenoGraph algorithm
 ===============
 
 ### Rphenograph
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/TomKellyGenetics/Rphenograph?branch=master&svg=true)](https://ci.appveyor.com/project/TomKellyGenetics/Rphenograph)
+[![Travis-CI Build Status](https://travis-ci.org/TomKellyGenetics/Rphenograph.svg?branch=master)](https://travis-ci.org/TomKellyGenetics/Rphenograph)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+[![Coverage Status](https://img.shields.io/codecov/c/github/JinmiaoChenLab/Rphenograph/master.svg)](https://codecov.io/github/JinmiaoChenLab/Rphenograph?branch=master)
 
 A simple R implementation of the [PhenoGraph](http://www.cell.com/cell/abstract/S0092-8674(15)00637-6) [1] algorithm, which is a clustering method designed for high-dimensional single-cell data analysis. It works by creating a graph ("network") representing phenotypic similarities between cells by calclating the Jaccard coefficient between nearest-neighbor sets, and then identifying communities using the well known [Louvain method](https://sites.google.com/site/findcommunities/) in this graph. 
 

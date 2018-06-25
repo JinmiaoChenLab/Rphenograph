@@ -1,1 +1,4 @@
 Rphenograph_iris_cluster.png
+^appveyor\.yml$
+^\.travis\.yml$
+^codecov\.yml$
