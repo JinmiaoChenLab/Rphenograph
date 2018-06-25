@@ -80,7 +80,7 @@ Rphenograph <- function(data, k=30, directed=FALSE, prune=FALSE){
         g <- graph.data.frame(relations, directed=TRUE)
         mat <- as_adjacency_matrix(g)
         mat <- mat %*% t(mat)
-        g <- graph_from_adjacency_matrix(mat)
+        g <- graph_from_adjacency_matrix(mat, mode = "undirected")
       } else {
         g <- graph.data.frame(relations, directed=directed)
       }
