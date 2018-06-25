@@ -59,6 +59,7 @@ visit http://www.cs.umd.edu/~mount/ANN/.
 }}
 
 \examples{
+library("igraph")
 iris_unique <- unique(iris) # Remove duplicates
 data <- as.matrix(iris_unique[,1:4])
 Rphenograph_out <- Rphenograph(data, k = 45)

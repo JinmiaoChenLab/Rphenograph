@@ -13,9 +13,9 @@ Description: A simple R implementation of the phenograph [PhenoGraph](http://
     sets, and then identifying communities using the well known ["Louvain method"]
     (https://sites.google.com/site/findcommunities/) in this graph.
 Depends:
-    R (>= 2.10.0)
+    R (>= 2.10.0),
+    igraph(>= 1.0.1)
 Imports:
-    igraph(>= 1.0.1),
     RANN(>= 2.5),
     Rcpp (>= 0.12.0),
     ggplot2
