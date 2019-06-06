@@ -66,12 +66,18 @@ Rphenograph <- function(data, k=30,verbose=FALSE){
     if(verbose){
         cat("DONE ~",t1[3],"s\n", " Compute jaccard coefficient between nearest-neighbor sets...")
     }
-    t2 <- system.time(links <- jaccard_coeff(neighborMatrix))
+    t2 <- system.time(links <- Rphenograph:::jaccard_coeff(neighborMatrix))
 
     if(verbose){
         cat("DONE ~",t2[3],"s\n", " Build undirected graph from the weighted links...")
     }
     links <- links[links[,1]>0, ]
+    
+    ## Fix if data point goes missing (due to all of its associated jaccard coefficients being 0 and if it ever appears as another points' nearest neighbor, the corresponding jaccard coeficient also being 0.
+    u = unique(c(links[,1],links[,2]))
+    u = setdiff(1:nrow(data),u) ## Check if data point has no link
+    links=rbind(links,matrix(ncol=3,byrow=FALSE,data=c(u,u,rep(1,length(u)))))
+        
     relations <- as.data.frame(links)
     colnames(relations)<- c("from","to","weight")
     t3 <- system.time(g <- graph.data.frame(relations, directed=FALSE))

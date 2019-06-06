@@ -1,6 +1,6 @@
 Package: Rphenograph
 Title: Rphenograph with approximate KNN
-Version: 0.99.2
+Version: 0.99.3
 Authors@R: c(
                person("Hao","Chen",middle=NULL,email="chen_hao@immunol.a-star.edu.sg",role="cre"),	
                person("Etienne","Becht",middle=NULL,email="etienne.becht@protonmail.com",role="ctb")
