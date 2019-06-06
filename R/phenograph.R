@@ -37,11 +37,12 @@
 #' ggplot(iris_unique, aes(x=Sepal.Length, y=Sepal.Width, col=Species, shape=phenograph_cluster)) + geom_point(size = 3)+theme_bw()
 #' 
 #' @importFrom igraph graph.data.frame cluster_louvain modularity membership
+#' @importFrom RcppHNSW hnsw_knn
 #' @import ggplot2
 #' @useDynLib Rphenograph
 #' 
 #' @export
-Rphenograph <- function(data, k=30){
+Rphenograph <- function(data, k=30,verbose=FALSE){
     if(is.data.frame(data))
         data <- as.matrix(data)
     
@@ -53,18 +54,30 @@ Rphenograph <- function(data, k=30){
     }else if (k > nrow(data)-2){
         stop("k must be smaller than the total number of points!")
     }
-    
-    message("Run Rphenograph starts:","\n", 
-        "  -Input data of ", nrow(data)," rows and ", ncol(data), " columns","\n",
-        "  -k is set to ", k)
-    
-    cat("  Finding nearest neighbors...")
-    t1 <- system.time(neighborMatrix <- find_neighbors(data, k=k+1)[,-1])
-    cat("DONE ~",t1[3],"s\n", " Compute jaccard coefficient between nearest-neighbor sets...")
-    t2 <- system.time(links <- jaccard_coeff(neighborMatrix))
 
-    cat("DONE ~",t2[3],"s\n", " Build undirected graph from the weighted links...")
+    if(verbose){
+        message("Run Rphenograph starts:","\n", 
+                "  -Input data of ", nrow(data)," rows and ", ncol(data), " columns","\n",
+                "  -k is set to ", k)
+        cat("  Finding nearest neighbors...")
+    }
+    ## t1 <- system.time(neighborMatrix <- find_neighbors(data, k=k+1)[,-1])
+    t1 <- system.time(neighborMatrix <- hnsw_knn(data, k=k+1)$idx[,-1])
+    if(verbose){
+        cat("DONE ~",t1[3],"s\n", " Compute jaccard coefficient between nearest-neighbor sets...")
+    }
+    t2 <- system.time(links <- Rphenograph:::jaccard_coeff(neighborMatrix))
+
+    if(verbose){
+        cat("DONE ~",t2[3],"s\n", " Build undirected graph from the weighted links...")
+    }
     links <- links[links[,1]>0, ]
+    
+    ## Fix if data point goes missing (due to all of its associated jaccard coefficients being 0 and if it ever appears as another points' nearest neighbor, the corresponding jaccard coeficient also being 0.
+    u = unique(c(links[,1],links[,2]))
+    u = setdiff(1:nrow(data),u) ## Check if data point has no link
+    links=rbind(links,matrix(ncol=3,byrow=FALSE,data=c(u,u,rep(1,length(u)))))
+        
     relations <- as.data.frame(links)
     colnames(relations)<- c("from","to","weight")
     t3 <- system.time(g <- graph.data.frame(relations, directed=FALSE))
@@ -73,14 +86,17 @@ Rphenograph <- function(data, k=30){
     #    cluster_walktrap, cluster_spinglass, 
     #    cluster_leading_eigen, cluster_edge_betweenness, 
     #    cluster_fast_greedy, cluster_label_prop  
-    cat("DONE ~",t3[3],"s\n", " Run louvain clustering on the graph ...")
+    if(verbose){
+        cat("DONE ~",t3[3],"s\n", " Run louvain clustering on the graph ...")
+    }
     t4 <- system.time(community <- cluster_louvain(g))
-    cat("DONE ~",t4[3],"s\n")
-    
-    message("Run Rphenograph DONE, totally takes ", sum(c(t1[3],t2[3],t3[3],t4[3])), "s.")
-    cat("  Return a community class\n  -Modularity value:", modularity(community),"\n")
-    cat("  -Number of clusters:", length(unique(membership(community))))
-    
+    if(verbose){
+        cat("DONE ~",t4[3],"s\n")
+        
+        message("Run Rphenograph DONE, totally takes ", sum(c(t1[3],t2[3],t3[3],t4[3])), "s.")
+        cat("  Return a community class\n  -Modularity value:", modularity(community),"\n")
+        cat("  -Number of clusters:", length(unique(membership(community))))
+    }    
     return(list(g, community))
 }
 

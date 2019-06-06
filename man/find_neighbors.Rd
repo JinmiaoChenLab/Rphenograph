@@ -29,4 +29,3 @@ data <- as.matrix(iris_unique[,1:4])
 neighbors <- find_neighbors(data, k=10)
 
 }
-

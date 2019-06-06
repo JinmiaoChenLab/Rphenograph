@@ -4,7 +4,7 @@
 \alias{Rphenograph}
 \title{RphenoGraph clustering}
 \usage{
-Rphenograph(data, k = 30)
+Rphenograph(data, k = 30, verbose = FALSE)
 }
 \arguments{
 \item{data}{matrix; input data matrix}
@@ -29,10 +29,10 @@ a list contains an igraph graph object for \code{graph_from_data_frame} and a co
 \item{plot}{for communities objects returns NULL, invisibly.}
 }
 \description{
-R implementation of the phenograph algorithm
+R implementation of the PhenoGraph algorithm
 }
 \details{
-A simple R implementation of the phenograph [PhenoGraph](http://www.cell.com/cell/abstract/S0092-8674(15)00637-6) algorithm, 
+A simple R implementation of the [PhenoGraph](http://www.cell.com/cell/abstract/S0092-8674(15)00637-6) algorithm, 
 which is a clustering method designed for high-dimensional single-cell data analysis. It works by creating a graph ("network") representing 
 phenotypic similarities between cells by calclating the Jaccard coefficient between nearest-neighbor sets, and then identifying communities 
 using the well known [Louvain method](https://sites.google.com/site/findcommunities/) in this graph.
@@ -50,4 +50,3 @@ ggplot(iris_unique, aes(x=Sepal.Length, y=Sepal.Width, col=Species, shape=phenog
 \references{
 Jacob H. Levine and et.al. Data-Driven Phenotypic Dissection of AML Reveals Progenitor-like Cells that Correlate with Prognosis. Cell, 2015.
 }
-
