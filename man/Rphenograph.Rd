@@ -2,9 +2,12 @@
 % Please edit documentation in R/phenograph.R
 \name{Rphenograph}
 \alias{Rphenograph}
+\alias{find_neighbors}
 \title{RphenoGraph clustering}
 \usage{
 Rphenograph(data, k = 30)
+
+find_neighbors(data, k)
 }
 \arguments{
 \item{data}{matrix; input data matrix}
@@ -27,16 +30,30 @@ a list contains an igraph graph object for \code{graph_from_data_frame} and a co
 \item{show_trace}{returns a character vector.}
 \item{code_len}{returns a numeric scalar for communities found with the InfoMAP method and NULL for other methods.}
 \item{plot}{for communities objects returns NULL, invisibly.}
+
+a n-by-k matrix of neighbor indices
 }
 \description{
-R implementation of the phenograph algorithm
+R implementation of the PhenoGraph algorithm
+
+Uses a kd-tree to find the p number of near neighbours for each point in an input/output dataset.
 }
 \details{
-A simple R implementation of the phenograph [PhenoGraph](http://www.cell.com/cell/abstract/S0092-8674(15)00637-6) algorithm, 
+A simple R implementation of the [PhenoGraph](http://www.cell.com/cell/abstract/S0092-8674(15)00637-6) algorithm, 
 which is a clustering method designed for high-dimensional single-cell data analysis. It works by creating a graph ("network") representing 
 phenotypic similarities between cells by calclating the Jaccard coefficient between nearest-neighbor sets, and then identifying communities 
 using the well known [Louvain method](https://sites.google.com/site/findcommunities/) in this graph.
+
+Use the nn2 function from the RANN package, utilizes the Approximate Near Neighbor (ANN) C++ library, 
+which can give the exact near neighbours or (as the name suggests) approximate near neighbours 
+to within a specified error bound. For more information on the ANN library please 
+visit http://www.cs.umd.edu/~mount/ANN/.
 }
+\section{Functions}{
+\itemize{
+\item \code{find_neighbors}: Uses a kd-tree to find the p number of near neighbours for each point in an input/output dataset.
+}}
+
 \examples{
 iris_unique <- unique(iris) # Remove duplicates
 data <- as.matrix(iris_unique[,1:4])
@@ -46,8 +63,11 @@ membership(Rphenograph_out[[2]])
 iris_unique$phenograph_cluster <- factor(membership(Rphenograph_out[[2]]))
 ggplot(iris_unique, aes(x=Sepal.Length, y=Sepal.Width, col=Species, shape=phenograph_cluster)) + geom_point(size = 3)+theme_bw()
 
+iris_unique <- unique(iris) # Remove duplicates
+data <- as.matrix(iris_unique[,1:4])
+neighbors <- find_neighbors(data, k=10)
+
 }
 \references{
 Jacob H. Levine and et.al. Data-Driven Phenotypic Dissection of AML Reveals Progenitor-like Cells that Correlate with Prognosis. Cell, 2015.
 }
-
