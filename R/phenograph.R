@@ -72,7 +72,7 @@ Rphenograph <- function(data, k=30, directed=FALSE, prune=FALSE, clust_fun=NULL)
     cat("  Finding nearest neighbors...")
     t1 <- system.time(neighborMatrix <- find_neighbors(data, k=k+1)[,-1])
     cat("DONE ~",t1[3],"s\n", " Compute jaccard coefficient between nearest-neighbor sets...")
-    t2 <- system.time(links <- jaccard_coeff(neighborMatrix))
+    t2 <- system.time(links <- Rphenograph:::jaccard_coeff(neighborMatrix))
     
     cat("DONE ~",t2[3],"s\n", " Build undirected graph from the weighted links...")
     links <- links[links[,1]>0, ]
