@@ -1,7 +1,7 @@
 Package: Rphenograph
 Type: Package
 Title: R implementation of the phenograph algorithm
-Version: 0.99.1
+Version: 0.99.1.9001
 Date: 2015-09-07
 Author: Hao Chen
 Maintainer: Hao Chen <chen_hao@immunol.a-star.edu.sg>
@@ -13,7 +13,7 @@ Description: A simple R implementation of the phenograph [PhenoGraph](http://
     sets, and then identifying communities using the well known ["Louvain method"]
     (https://sites.google.com/site/findcommunities/) in this graph.
 Depends:
-    R (>= 2.10.0), ggplot2, igraph
+    R (>= 2.10.0)
 Imports:
     igraph(>= 1.0.1),
     RANN(>= 2.5),
@@ -21,6 +21,7 @@ Imports:
     ggplot2
 LinkingTo: Rcpp
 Suggests:
-    testthat
+    testthat,
+    covr
 License: Artistic-2.0
-RoxygenNote: 5.0.1
+RoxygenNote: 6.1.1
